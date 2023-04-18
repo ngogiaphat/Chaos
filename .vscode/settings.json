@@ -7,5 +7,6 @@
         "vector": "cpp",
         "cctype": "cpp"
     },
-    "C_Cpp.errorSquiggles": "Disabled"
+    "C_Cpp.errorSquiggles": "Disabled",
+    "python.analysis.typeCheckingMode": "basic"
 }
