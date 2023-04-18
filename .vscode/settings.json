@@ -1,6 +1,11 @@
 {
     "jupyter.jupyterServerType": "local",
     "files.associations": {
-        "ostream": "cpp"
-    }
+        "ostream": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "vector": "cpp",
+        "cctype": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }
