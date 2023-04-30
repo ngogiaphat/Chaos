@@ -36,7 +36,7 @@ class ClassList{
         }
         else{
             Student previousStudent = head;
-            Student currentStudent = head.NextStudent;\n\n            
+            Student currentStudent = head.NextStudent;         
             while (currentStudent != null){
                 if (currentStudent.StudentNumber == studentNumber){
                     previousStudent.NextStudent = currentStudent.NextStudent;
