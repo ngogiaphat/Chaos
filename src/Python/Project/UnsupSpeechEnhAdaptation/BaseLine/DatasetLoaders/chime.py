@@ -8,10 +8,10 @@ import torch
 import os
 import numpy as np
 import glob2
-import baseline.dataset_loaders.abstract_dataset as abstract_dataset
+import BaseLine.DatasetLoaders.AbstractDataset as AbstractDataset
 from __config__ import CHiME_ROOT_PATH
 import torchaudio
-class Dataset(torch.utils.data.Dataset, abstract_dataset.Dataset):
+class Dataset(torch.Utils.data.Dataset, AbstractDataset.Dataset):
     """ Dataset class for the CHiME dataset for one and multi-speaker
     speech enhancement problems.
     """

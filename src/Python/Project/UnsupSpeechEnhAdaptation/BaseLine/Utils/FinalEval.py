@@ -5,10 +5,10 @@ from tqdm import tqdm
 from pprint import pprint
 import pickle
 import os
-import baseline.utils.mixture_consistency as mixture_consistency
-import baseline.models.improved_sudormrf as improved_sudormrf
-import baseline.metrics.dnnmos_metric as dnnmos_metric
-import baseline.dataset_loaders.chime as chime
+import BaseLine.Utils.MixtureConsistency as MixtureConsistency
+import BaseLine.Models.ImprovedSudormrf as ImprovedSudormrf
+import BaseLine.Metrics.DNNMosMetric as DNNMosMetric
+import BaseLine.DatasetLoaders.Chime as Chime
 def get_args():
     """! Command line parser"""
     parser = argparse.ArgumentParser(description = "Final evaluation Argument Parser")
@@ -43,12 +43,12 @@ def get_args():
     )
     return parser.parse_args()
 def get_chime_generator(dataset_split):
-    data_loader = chime.Dataset(
+    data_loader = Chime.Dataset(
         sample_rate = 16000, fixed_n_sources = 1, timelength=-1., augment = False, use_vad = False, zero_pad = False, split = dataset_split, get_only_active_speakers = False,
         normalize_audio = False, n_samples = -1)
     return data_loader.get_generator(batch_size=1, num_workers=1)
 def load_sudo_rm_rf_model(path):
-    model = improved_sudormrf.SuDORMRF( out_channels = 256, in_channels = 512, num_blocks = 8, upsampling_depth = 7, enc_kernel_size = 81, enc_num_basis = 512, num_sources = 2,)
+    model = ImprovedSudormrf.SuDORMRF( out_channels = 256, in_channels = 512, num_blocks = 8, upsampling_depth = 7, enc_kernel_size = 81, enc_num_basis = 512, num_sources = 2,)
     #You can load the state_dict as here:
     model.load_state_dict(torch.load(path))
     print(f"Fetched model from: {path}")
@@ -64,11 +64,7 @@ if __name__ == "__main__":
     else:
         model = None
     test_tqdm_gen = tqdm(enumerate(test_generator), desc='Eval on 16kHz chime 1 speaker')
-    res_dic = {
-            "sig_mos": [],
-            "bak_mos": [],
-            "ovr_mos": [],
-    }
+    res_dic = {"sig_mos": [], "bak_mos": [], "ovr_mos": [],}
     gen_len = len(test_generator)
     with torch.no_grad():
         for j, mixture in test_tqdm_gen:
@@ -87,7 +83,7 @@ if __name__ == "__main__":
                 input_mix_mean = input_mix.mean(-1, keepdim=True)
                 input_mix = (input_mix - input_mix_mean) / (input_mix_std + 1e-9)
                 student_estimates = model(input_mix)
-                student_estimates = mixture_consistency.apply(student_estimates, input_mix)
+                student_estimates = MixtureConsistency.apply(student_estimates, input_mix)
                 s_est_speech = student_estimates[0, 0, :file_length].detach().cpu().numpy()
             if hparams["normalize_with_max_absolute_value"]:
                 s_est_speech -= s_est_speech.mean(-1)
@@ -95,7 +91,7 @@ if __name__ == "__main__":
             else:
                 s_est_speech = (s_est_speech - s_est_speech.mean(-1)) / (s_est_speech.std(-1) + 1e-9)
                 s_est_speech = (s_est_speech * np_mixture_std) + np_mixture_mean
-            dnsmos_res_dic = dnnmos_metric.compute_dnsmos(s_est_speech, fs=16000)
+            dnsmos_res_dic = DNNMosMetric.compute_dnsmos(s_est_speech, fs=16000)
             for k, v in dnsmos_res_dic.items():
                 res_dic[k].append(v)
             ovrl_mos_avg = round(np.mean(res_dic["ovr_mos"]), 2)

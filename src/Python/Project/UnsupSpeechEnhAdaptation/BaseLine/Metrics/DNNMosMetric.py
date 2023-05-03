@@ -5,7 +5,6 @@ Functional version of https://github.com/microsoft/DNS-Challenge/blob/master/DNS
 Licences : 
 - https://github.com/microsoft/DNS-Challenge/blob/master/LICENSE
 - https://github.com/microsoft/DNS-Challenge/blob/master/LICENSE-CODE
-
 Corresponding paper : https://arxiv.org/pdf/2110.01763.pdf
 """
 import os

@@ -3,30 +3,30 @@
 @author Efthymios Tzinis {etzinis2@illinois.edu}
 @copyright University of Illinois at Urbana-Champaign
 """
-import baseline.dataset_loaders.libri1to3mix as libri1to3mix
-import baseline.dataset_loaders.reverb_libri1to3mix as reverb_libri1to3mix
-import baseline.dataset_loaders.libri1to3chime as libri1to3chime
-import baseline.dataset_loaders.chime as chime
+import BaseLine.DatasetLoaders.Chime as Chime
+import BaseLine.DatasetLoaders.Libri1to3Mix as Libri1to3Mix
+import BaseLine.DatasetLoaders.Libri1to3Chime as Libri1to3Chime
+import BaseLine.DatasetLoaders.ReverbLibri1to3mix as ReverbLibri1to3mix
 def create_loader_for_simple_dataset(dataset_name = None, hparams = None, fixed_n_sources = None, n_speakers_priors = None, split = None, 
                                      get_only_active_speakers = False, n_samples = -1):
-    if dataset_name == 'libri1to3mix':
+    if dataset_name == 'Libri1to3mix':
         if split == "train":
             this_dataset_split = "train-360"
         elif split == "val":
             this_dataset_split = "dev"
         else:
             this_dataset_split = split
-        data_loader = libri1to3mix.Dataset(sample_rate = hparams['fs'], fixed_n_sources = fixed_n_sources, timelength = hparams['audio_timelength'],
+        data_loader = Libri1to3Mix.Dataset(sample_rate = hparams['fs'], fixed_n_sources = fixed_n_sources, timelength = hparams['audio_timelength'],
                                            augment = 'train' in split, zero_pad = True,min_or_max = hparams['min_or_max'], split = this_dataset_split,
                                            normalize_audio = False, n_samples = n_samples, n_speakers_priors = n_speakers_priors)
-    elif dataset_name == 'reverb_libri1to3mix':
+    elif dataset_name == 'ReverbLibri1to3mix':
         if split == "train":
             this_dataset_split = "train-360"
         elif split == "val":
             this_dataset_split = "dev"
         else:
             this_dataset_split = split
-        data_loader = reverb_libri1to3mix.Dataset(sample_rate = hparams['fs'], fixed_n_sources = fixed_n_sources, timelength = hparams['audio_timelength'],
+        data_loader = ReverbLibri1to3mix.Dataset(sample_rate = hparams['fs'], fixed_n_sources = fixed_n_sources, timelength = hparams['audio_timelength'],
                                                   augment = 'train' in split, zero_pad = True, min_or_max = hparams['min_or_max'], split = this_dataset_split, normalize_audio = False, 
                                                   n_samples = n_samples,n_speakers_priors = n_speakers_priors)
     elif dataset_name == 'libri1to3chime':
@@ -34,7 +34,7 @@ def create_loader_for_simple_dataset(dataset_name = None, hparams = None, fixed_
             this_dataset_split = "dev"
         else:
             this_dataset_split = split
-        data_loader = libri1to3chime.Dataset(sample_rate = hparams['fs'], fixed_n_sources = fixed_n_sources,timelength = hparams['audio_timelength'], augment = 'train' in split, 
+        data_loader = Libri1to3Chime.Dataset(sample_rate = hparams['fs'], fixed_n_sources = fixed_n_sources,timelength = hparams['audio_timelength'], augment = 'train' in split, 
                                              zero_pad = True, get_only_active_speakers = get_only_active_speakers, min_or_max = hparams['min_or_max'], split = this_dataset_split,
                                              n_speakers_priors = n_speakers_priors, normalize_audio = False, n_samples = n_samples)
     elif dataset_name == 'chime':
@@ -44,7 +44,7 @@ def create_loader_for_simple_dataset(dataset_name = None, hparams = None, fixed_
             this_dataset_split = "dev"
         else:
             this_dataset_split = split
-        data_loader = chime.Dataset(sample_rate = hparams['fs'], fixed_n_sources = fixed_n_sources, timelength = hparams['audio_timelength'], augment='train' in split, 
+        data_loader = Chime.Dataset(sample_rate = hparams['fs'], fixed_n_sources = fixed_n_sources, timelength = hparams['audio_timelength'], augment='train' in split, 
                                     zero_pad = True, use_vad = hparams['use_vad'],get_only_active_speakers = get_only_active_speakers, 
                                     split = this_dataset_split,normalize_audio = False, n_samples = n_samples)
     else:

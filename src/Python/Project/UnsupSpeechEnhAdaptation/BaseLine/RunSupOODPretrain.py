@@ -5,20 +5,20 @@ import torch
 import numpy as np
 from tqdm import tqdm
 from pprint import pprint
-import baseline.utils.cmd_parser as parser
-import baseline.utils.cometml_logger as cometml_logger
-import baseline.utils.dataset_setup as dataset_setup
-import baseline.utils.mixture_consistency as mixture_consistency
-import baseline.models.improved_sudormrf as improved_sudormrf
-import baseline.metrics.dnnmos_metric as dnnmos_metric
+import BaseLine.Utils.CMDParser as CMDParser
+import BaseLine.Utils.MixtureConsistency as MixtureConsistency
+import BaseLine.Utils.CometmlLogger as CometmlLogger
+import BaseLine.Utils.DatasetSetup as dataset_setup
+import BaseLine.Models.ImprovedSudormrf as ImprovedSudormrf
+import BaseLine.Metrics.DNNMosMetric as DNNMosMetric
 from asteroid.losses import pairwise_neg_sisdr
 from multiprocessing import Pool
 def compute_dnsmos_process(est_speech):
-    return dnnmos_metric.compute_dnsmos(est_speech, fs=16000)
+    return DNNMosMetric.compute_dnsmos(est_speech, fs=16000)
 args = parser.get_args()
 hparams = vars(args)
 generators = dataset_setup.supervised_setup(hparams)
-audio_logger = cometml_logger.AudioLogger(fs=hparams["fs"], n_sources=2)
+audio_logger = CometmlLogger.AudioLogger(fs=hparams["fs"], n_sources=2)
 experiment = Experiment(API_KEY, project_name=hparams["project_name"])
 experiment.log_parameters(hparams)
 experiment_name = '_'.join(hparams['cometml_tags'])
@@ -54,7 +54,7 @@ for val_set in [x for x in generators if not x == 'train']:
         }
     else:
         val_losses[val_set] = {"sisdr": pairwise_neg_sisdr, "sisdri": pairwise_neg_sisdr}
-model = improved_sudormrf.SuDORMRF(out_channels = hparams['out_channels'], in_channels = hparams['in_channels'], num_blocks = hparams['num_blocks'],
+model = ImprovedSudormrf.SuDORMRF(out_channels = hparams['out_channels'], in_channels = hparams['in_channels'], num_blocks = hparams['num_blocks'],
                                    upsampling_depth = hparams['upsampling_depth'], enc_kernel_size = hparams['enc_kernel_size'], enc_num_basis = hparams['enc_num_basis'], 
                                    num_sources = hparams['max_num_sources'])
 
@@ -70,7 +70,7 @@ def apply_output_transform(rec_sources_wavs, input_mix_std, input_mix_mean, inpu
     if hparams["rescale_to_input_mixture"]:
         rec_sources_wavs = (rec_sources_wavs * input_mix_std) + input_mix_mean
     if hparams["apply_mixture_consistency"]:
-        rec_sources_wavs = mixture_consistency.apply(rec_sources_wavs, input_mom)
+        rec_sources_wavs = MixtureConsistency.apply(rec_sources_wavs, input_mom)
     return rec_sources_wavs
 tr_step = 0
 val_step = 0
@@ -172,7 +172,7 @@ for i in range(hparams['n_epochs']):
             for loss_name in res_dic[d_name]:
                 res_dic[d_name][loss_name]['acc'] = []
     else:
-        res_dic = cometml_logger.report_losses_mean_and_std( res_dic, experiment, tr_step, val_step)
+        res_dic = CometmlLogger.report_losses_mean_and_std( res_dic, experiment, tr_step, val_step)
         for d_name in res_dic:
             for loss_name in res_dic[d_name]:
                 res_dic[d_name][loss_name]['acc'] = []
@@ -180,5 +180,5 @@ for i in range(hparams['n_epochs']):
     if hparams["save_models_every"] > 0:
         if tr_step % hparams["save_models_every"] == 0:
             torch.save( model.module.cpu().state_dict(), os.path.join(checkpoint_storage_path, f"sup_teacher_epoch_{tr_step}.pt"),)
-            # Restore the model in the proper device.
+            #Restore the model in the proper device.
             model = model.cuda()

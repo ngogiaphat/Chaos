@@ -8,15 +8,13 @@ class _LayerNorm(nn.Module):
         self.channel_size = channel_size
         self.gamma = nn.Parameter(torch.ones(channel_size), requires_grad = True)
         self.beta = nn.Parameter(torch.zeros(channel_size), requires_grad = True)
-
     def apply_gain_and_bias(self, normed_x):
         """ Assumes input of size `[batch, chanel, *]`. """
         return (self.gamma * normed_x.transpose(1, -1) + self.beta).transpose(1, -1)
 class GlobLN(_LayerNorm):
     """Global Layer Normalization (globLN)."""
     def forward(self, x):
-        """ Applies forward pass.
-        Works for any input size > 2D.
+        """ Applies forward pass. Works for any input size > 2D.
         Args:
             x (:class:`torch.Tensor`): Shape `[batch, chan, *]`
         Returns:
@@ -28,8 +26,7 @@ class GlobLN(_LayerNorm):
         return self.apply_gain_and_bias((x - mean) / (var + 1e-8).sqrt())
 class ConvNormAct(nn.Module):
     '''
-    This class defines the convolution layer with normalization and a PReLU
-    activation
+    This class defines the convolution layer with normalization and a PReLU activation
     '''
     def __init__(self, nIn, nOut, kSize, stride = 1, groups = 1):
         '''
@@ -176,11 +173,8 @@ class SuDORMRF(nn.Module):
         self.bottleneck = nn.Conv1d(in_channels = enc_num_basis, out_channels = out_channels, kernel_size = 1)
         #Separation module
         self.sm = nn.Sequential(*[
-            UConvBlock(out_channels=out_channels,
-                       in_channels=in_channels,
-                       upsampling_depth=upsampling_depth)
+            UConvBlock(out_channels=out_channels, in_channels=in_channels, upsampling_depth=upsampling_depth)
             for _ in range(num_blocks)])
-
         mask_conv = nn.Conv1d(out_channels, num_sources * enc_num_basis, 1)
         self.mask_net = nn.Sequential(nn.PReLU(), mask_conv)
         #Back end

@@ -187,6 +187,5 @@ def test_generator():
         assert noise.shape[:-1] == (batch_size, 1)
         assert sources.shape[:-1] == (batch_size, 1)
         break
-
 if __name__ == "__main__":
     test_generator()

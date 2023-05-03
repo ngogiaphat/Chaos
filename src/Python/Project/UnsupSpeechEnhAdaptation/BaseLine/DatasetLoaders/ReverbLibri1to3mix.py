@@ -7,14 +7,12 @@ import torch
 import os
 import numpy as np
 import glob2
-import baseline.dataset_loaders.abstract_dataset as abstract_dataset
+import BaseLine.DatasetLoaders.AbstractDataset as AbstractDataset
 from __config__ import LIBRI3MIX_ROOT_PATH
 import torchaudio
 import pyroomacoustics as pra
-class Dataset(torch.utils.data.Dataset, abstract_dataset.Dataset):
-    """ Dataset class for Librimix  1 to 3 for one and multi-speaker
-    speech enhancement problems with the addition of reverb.
-    """
+class Dataset(torch.Utils.data.Dataset, AbstractDataset.Dataset):
+    """ Dataset class for Librimix  1 to 3 for one and multi-speaker speech enhancement problems with the addition of reverb."""
     def __init__(self, **kwargs):
         super(Dataset, self).__init__()
         self.kwargs = kwargs
