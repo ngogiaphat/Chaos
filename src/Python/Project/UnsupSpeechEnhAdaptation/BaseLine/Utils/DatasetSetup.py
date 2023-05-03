@@ -17,8 +17,9 @@ def create_loader_for_simple_dataset(dataset_name = None, hparams = None, fixed_
         else:
             this_dataset_split = split
         data_loader = Libri1to3Mix.Dataset(sample_rate = hparams['fs'], fixed_n_sources = fixed_n_sources, timelength = hparams['audio_timelength'],
-                                           augment = 'train' in split, zero_pad = True,min_or_max = hparams['min_or_max'], split = this_dataset_split,
-                                           normalize_audio = False, n_samples = n_samples, n_speakers_priors = n_speakers_priors)
+            augment = 'train' in split, zero_pad = True,min_or_max = hparams['min_or_max'], split = this_dataset_split,
+            normalize_audio = False, n_samples = n_samples, n_speakers_priors = n_speakers_priors
+        )
     elif dataset_name == 'ReverbLibri1to3mix':
         if split == "train":
             this_dataset_split = "train-360"
@@ -27,16 +28,18 @@ def create_loader_for_simple_dataset(dataset_name = None, hparams = None, fixed_
         else:
             this_dataset_split = split
         data_loader = ReverbLibri1to3mix.Dataset(sample_rate = hparams['fs'], fixed_n_sources = fixed_n_sources, timelength = hparams['audio_timelength'],
-                                                  augment = 'train' in split, zero_pad = True, min_or_max = hparams['min_or_max'], split = this_dataset_split, normalize_audio = False, 
-                                                  n_samples = n_samples,n_speakers_priors = n_speakers_priors)
+            augment = 'train' in split, zero_pad = True, min_or_max = hparams['min_or_max'], split = this_dataset_split, normalize_audio = False, 
+            n_samples = n_samples,n_speakers_priors = n_speakers_priors
+        )
     elif dataset_name == 'libri1to3chime':
         if split == "val":
             this_dataset_split = "dev"
         else:
             this_dataset_split = split
         data_loader = Libri1to3Chime.Dataset(sample_rate = hparams['fs'], fixed_n_sources = fixed_n_sources,timelength = hparams['audio_timelength'], augment = 'train' in split, 
-                                             zero_pad = True, get_only_active_speakers = get_only_active_speakers, min_or_max = hparams['min_or_max'], split = this_dataset_split,
-                                             n_speakers_priors = n_speakers_priors, normalize_audio = False, n_samples = n_samples)
+            zero_pad = True, get_only_active_speakers = get_only_active_speakers, min_or_max = hparams['min_or_max'], split = this_dataset_split,
+            n_speakers_priors = n_speakers_priors, normalize_audio = False, n_samples = n_samples
+        )
     elif dataset_name == 'chime':
         if split == "test":
             this_dataset_split = "eval"
@@ -45,8 +48,9 @@ def create_loader_for_simple_dataset(dataset_name = None, hparams = None, fixed_
         else:
             this_dataset_split = split
         data_loader = Chime.Dataset(sample_rate = hparams['fs'], fixed_n_sources = fixed_n_sources, timelength = hparams['audio_timelength'], augment='train' in split, 
-                                    zero_pad = True, use_vad = hparams['use_vad'],get_only_active_speakers = get_only_active_speakers, 
-                                    split = this_dataset_split,normalize_audio = False, n_samples = n_samples)
+            zero_pad = True, use_vad = hparams['use_vad'],get_only_active_speakers = get_only_active_speakers, 
+            split = this_dataset_split,normalize_audio = False, n_samples = n_samples
+        )
     else:
         raise ValueError('Dataset: {} is not yet supported!'.format(dataset_name))
     return data_loader
@@ -62,7 +66,8 @@ def supervised_setup(hparams):
                 p_single_speaker = hparams['p_single_speaker']
                 p_multispeaker = 1. - hparams['p_single_speaker']
                 data_loader = create_loader_for_simple_dataset( dataset_name = dataset_name, hparams = hparams, fixed_n_sources = -1,
-                                                               n_speakers_priors = [p_single_speaker, p_multispeaker / 2, p_multispeaker / 2],split = data_split)
+                    n_speakers_priors = [p_single_speaker, p_multispeaker / 2, p_multispeaker / 2],split = data_split
+                )
                 this_dataset_name = data_split
                 generators[this_dataset_name] = data_loader.get_generator(batch_size=hparams['batch_size'], num_workers=hparams['n_jobs'])
             else:
@@ -75,8 +80,9 @@ def supervised_setup(hparams):
                 else:
                     #Non-chime
                     for fixed_n_sources in [1, 2, 3]:
-                        data_loader = create_loader_for_simple_dataset(dataset_name = dataset_name, hparams = hparams,
-                                                                       fixed_n_sources = fixed_n_sources, n_speakers_priors = [0.34, 0.33, 0.33], split = data_split)
+                        data_loader = create_loader_for_simple_dataset(dataset_name = dataset_name, hparams = hparams, fixed_n_sources = fixed_n_sources, 
+                            n_speakers_priors = [0.34, 0.33, 0.33], split = data_split
+                        )
                         this_dataset_name = f"{data_split}_{dataset_name}_{fixed_n_sources}sp"
                         generators[this_dataset_name] = data_loader.get_generator(batch_size = hparams['batch_size'], num_workers = hparams['n_jobs'])
     return generators
@@ -90,7 +96,8 @@ def unsupervised_setup(hparams):
         for dataset_name in hparams[data_split]:
             if data_split == "train":
                 data_loader = create_loader_for_simple_dataset(dataset_name = dataset_name, hparams = hparams, fixed_n_sources = -1, 
-                                                               get_only_active_speakers = False, split = data_split)
+                    get_only_active_speakers = False, split = data_split
+                )
                 this_dataset_name = data_split
                 generators[this_dataset_name] = data_loader.get_generator(batch_size = hparams['batch_size'], num_workers = hparams['n_jobs'])
             else:
@@ -98,14 +105,15 @@ def unsupervised_setup(hparams):
                 if dataset_name == 'chime':
                     for fixed_n_sources in [1]:
                         data_loader = create_loader_for_simple_dataset(dataset_name = dataset_name, hparams = hparams, fixed_n_sources = fixed_n_sources,
-                                                                       get_only_active_speakers = False, split = data_split, n_samples = 250)
+                            get_only_active_speakers = False, split = data_split, n_samples = 250)
                         this_dataset_name = f"{data_split}_{dataset_name}_{fixed_n_sources}sp"
                         generators[this_dataset_name] = data_loader.get_generator(batch_size = hparams['batch_size'], num_workers = hparams['n_jobs'])
                 else:
                     #Non-chime
                     for fixed_n_sources in [1, 2, 3]:
                         data_loader = create_loader_for_simple_dataset( dataset_name = dataset_name, hparams = hparams, fixed_n_sources = fixed_n_sources, 
-                                                                       n_speakers_priors = [0.34, 0.33, 0.33], split = data_split)
+                            n_speakers_priors = [0.34, 0.33, 0.33], split = data_split
+                        )
                         this_dataset_name = f"{data_split}_{dataset_name}_{fixed_n_sources}sp"
                         generators[this_dataset_name] = data_loader.get_generator(batch_size = hparams['batch_size'], num_workers = hparams['n_jobs'])
     return generators

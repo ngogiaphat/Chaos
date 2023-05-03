@@ -55,9 +55,8 @@ for val_set in [x for x in generators if not x == 'train']:
     else:
         val_losses[val_set] = {"sisdr": pairwise_neg_sisdr, "sisdri": pairwise_neg_sisdr}
 model = ImprovedSudormrf.SuDORMRF(out_channels = hparams['out_channels'], in_channels = hparams['in_channels'], num_blocks = hparams['num_blocks'],
-                                   upsampling_depth = hparams['upsampling_depth'], enc_kernel_size = hparams['enc_kernel_size'], enc_num_basis = hparams['enc_num_basis'], 
-                                   num_sources = hparams['max_num_sources'])
-
+    upsampling_depth = hparams['upsampling_depth'], enc_kernel_size = hparams['enc_kernel_size'], enc_num_basis = hparams['enc_num_basis'], 
+    num_sources = hparams['max_num_sources'])
 numparams = 0
 for f in model.parameters():
     if f.requires_grad:

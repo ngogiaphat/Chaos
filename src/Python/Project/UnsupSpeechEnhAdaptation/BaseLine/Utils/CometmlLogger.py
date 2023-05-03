@@ -41,10 +41,9 @@ class AudioLogger(object):
         true_sources = true_sources/np.abs(true_sources).max(-1, keepdims = True)
         pred_sources = pred_sources/np.abs(pred_sources).max(-1, keepdims = True)
         for b_ind in range(mixture.shape[0]):
-            experiment.log_audio(mixture[b_ind].squeeze(),
-                                 sample_rate = self.fs, 
-                                 file_name = tag + 'batch_{}_mixture'.format(b_ind +1), metadata = None, overwrite = True,
-                                 copy_to_tmp = True, step = step,)
+            experiment.log_audio(mixture[b_ind].squeeze(), sample_rate = self.fs,  file_name = tag + 'batch_{}_mixture'.format(b_ind +1), metadata = None, 
+                overwrite = True, copy_to_tmp = True, step = step,
+            )
             for s_ind in range(self.n_sources):
                 experiment.log_audio(true_sources[b_ind][s_ind].squeeze(),
                     sample_rate = self.fs, file_name = tag + 'batch_{}_source_{}_true.wav'.format(b_ind+1, s_ind+1), metadata = None, overwrite = True, copy_to_tmp = True, step = step)
