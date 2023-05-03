@@ -13,7 +13,7 @@ for (i in 1:(nrow(adj_mtx)-1)) {
       next
     } 
     else {
-      \n      edges <- adj_mtx[row.names == v, row.names == row_names[j]]
+      edges <- adj_mtx[row.names == v, row.names == row_names[j]]
       edge_weight <- as.numeric(edges)
       if (edge_weight < min_edge_weight) {
         min_edge_weight <- edge_weight
