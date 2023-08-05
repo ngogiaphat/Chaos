@@ -9,16 +9,17 @@ class _LayerNorm(nn.Module):
         self.gamma = nn.Parameter(torch.ones(channel_size), requires_grad = True)
         self.beta = nn.Parameter(torch.zeros(channel_size), requires_grad = True)
     def apply_gain_and_bias(self, normed_x):
-        """ Assumes input of size `[batch, chanel, *]`. """
+        """ Assumes input of size `[batch, chanel, *]`."""
         return (self.gamma * normed_x.transpose(1, -1) + self.beta).transpose(1, -1)
 class GlobLN(_LayerNorm):
     """Global Layer Normalization (globLN)."""
     def forward(self, x):
-        """ Applies forward pass. Works for any input size > 2D.
-        Args:
-            x (:class:`torch.Tensor`): Shape `[batch, chan, *]`
-        Returns:
-            :class:`torch.Tensor`: gLN_x `[batch, chan, *]`
+        """
+            Applies forward pass. Works for any input size > 2D.
+            Args:
+                x (:class:`torch.Tensor`): Shape `[batch, chan, *]`
+            Returns:
+                :class:`torch.Tensor`: gLN_x `[batch, chan, *]`
         """
         dims = list(range(1, len(x.shape)))
         mean = x.mean(dim=dims, keepdim=True)
@@ -26,14 +27,14 @@ class GlobLN(_LayerNorm):
         return self.apply_gain_and_bias((x - mean) / (var + 1e-8).sqrt())
 class ConvNormAct(nn.Module):
     '''
-    This class defines the convolution layer with normalization and a PReLU activation
+        This class defines the convolution layer with normalization and a PReLU activation
     '''
     def __init__(self, nIn, nOut, kSize, stride = 1, groups = 1):
         '''
-        :param nIn: number of input channels
-        :param nOut: number of output channels
-        :param kSize: kernel size
-        :param stride: stride rate for down-sampling. Default is 1
+            :param nIn: number of input channels
+            :param nOut: number of output channels
+            :param kSize: kernel size
+            :param stride: stride rate for down-sampling. Default is 1
         '''
         super().__init__()
         padding = int((kSize - 1) / 2)
@@ -46,14 +47,14 @@ class ConvNormAct(nn.Module):
         return self.act(output)
 class ConvNorm(nn.Module):
     '''
-    This class defines the convolution layer with normalization and PReLU activation
+        This class defines the convolution layer with normalization and PReLU activation
     '''
     def __init__(self, nIn, nOut, kSize, stride = 1, groups = 1):
         '''
-        :param nIn: number of input channels
-        :param nOut: number of output channels
-        :param kSize: kernel size
-        :param stride: stride rate for down-sampling. Default is 1
+            :param nIn: number of input channels
+            :param nOut: number of output channels
+            :param kSize: kernel size
+            :param stride: stride rate for down-sampling. Default is 1
         '''
         super().__init__()
         padding = int((kSize - 1) / 2)
@@ -64,11 +65,11 @@ class ConvNorm(nn.Module):
         return self.norm(output)
 class NormAct(nn.Module):
     '''
-    This class defines a normalization and PReLU activation
+        This class defines a normalization and PReLU activation
     '''
     def __init__(self, nOut):
         '''
-        :param nOut: number of output channels
+            :param nOut: number of output channels
         '''
         super().__init__()
         #Self.norm = nn.GroupNorm(1, nOut, eps=1e-08)
@@ -79,15 +80,15 @@ class NormAct(nn.Module):
         return self.act(output)
 class DilatedConv(nn.Module):
     '''
-    This class defines the dilated convolution.
+        This class defines the dilated convolution.
     '''
     def __init__(self, nIn, nOut, kSize, stride=1, d=1, groups=1):
         '''
-        :param nIn: number of input channels
-        :param nOut: number of output channels
-        :param kSize: kernel size
-        :param stride: optional stride rate for down-sampling
-        :param d: optional dilation rate
+            :param nIn: number of input channels
+            :param nOut: number of output channels
+            :param kSize: kernel size
+            :param stride: optional stride rate for down-sampling
+            :param d: optional dilation rate
         '''
         super().__init__()
         self.conv = nn.Conv1d(nIn, nOut, kSize, stride = stride, dilation = d, padding=((kSize - 1) // 2) * d, groups = groups)
@@ -95,15 +96,15 @@ class DilatedConv(nn.Module):
         return self.conv(input)
 class DilatedConvNorm(nn.Module):
     '''
-    This class defines the dilated convolution with normalized output.
+        This class defines the dilated convolution with normalized output.
     '''
     def __init__(self, nIn, nOut, kSize, stride=1, d=1, groups=1):
         '''
-        :param nIn: number of input channels
-        :param nOut: number of output channels
-        :param kSize: kernel size
-        :param stride: optional stride rate for down-sampling
-        :param d: optional dilation rate
+            :param nIn: number of input channels
+            :param nOut: number of output channels
+            :param kSize: kernel size
+            :param stride: optional stride rate for down-sampling
+            :param d: optional dilation rate
         '''
         super().__init__()
         self.conv = nn.Conv1d(nIn, nOut, kSize, stride = stride, dilation = d, padding = ((kSize - 1) // 2) * d, groups = groups)
@@ -114,8 +115,7 @@ class DilatedConvNorm(nn.Module):
         return self.norm(output)
 class UConvBlock(nn.Module):
     '''
-    This class defines the block which performs successive downsampling and upsampling in order to be able to analyze the input features in multiple
-    resolutions.
+        This class defines the block which performs successive downsampling and upsampling in order to be able to analyze the input features in multiple resolutions.
     '''
     def __init__(self, out_channels = 128, in_channels = 512, upsampling_depth = 4):
         super().__init__()
@@ -135,8 +135,8 @@ class UConvBlock(nn.Module):
         self.res_conv = nn.Conv1d(in_channels, out_channels, 1)
     def forward(self, x):
         '''
-        :param x: input feature map
-        :return: transformed feature map
+            :param x: input feature map
+            :return: transformed feature map
         '''
         residual = x.clone()
         #Reduce --> project high-dimensional feature maps to low-dimensional space

@@ -1,11 +1,11 @@
 """
-Copied from https://github.com/UDASE-CHiME2023/baseline/blob/main/metrics/dnnmos_metric.py
-Author: Manuel Pariente
-Functional version of https://github.com/microsoft/DNS-Challenge/blob/master/DNSMOS/dnsmos_local.py
-Licences : 
-- https://github.com/microsoft/DNS-Challenge/blob/master/LICENSE
-- https://github.com/microsoft/DNS-Challenge/blob/master/LICENSE-CODE
-Corresponding paper : https://arxiv.org/pdf/2110.01763.pdf
+    Copied from https://github.com/UDASE-CHiME2023/baseline/blob/main/metrics/dnnmos_metric.py
+    Author: Manuel Pariente
+    Functional version of https://github.com/microsoft/DNS-Challenge/blob/master/DNSMOS/dnsmos_local.py
+    Licences :
+    - https://github.com/microsoft/DNS-Challenge/blob/master/LICENSE
+    - https://github.com/microsoft/DNS-Challenge/blob/master/LICENSE-CODE
+    Corresponding paper : https://arxiv.org/pdf/2110.01763.pdf
 """
 import os
 import numpy as np
@@ -14,7 +14,7 @@ import onnxruntime as ort
 import numpy.polynomial.polynomial as poly
 #Coefficients for polynomial fitting
 COEFS_SIG = np.array([9.651228012789436761e-01, 6.592637550310214145e-01, 7.572372955623894730e-02])
-COEFS_BAK = np.array([-3.733460011101781717e+00,2.700114234092929166e+00, -1.721332907340922813e-01]) 
+COEFS_BAK = np.array([-3.733460011101781717e+00,2.700114234092929166e+00, -1.721332907340922813e-01])
 COEFS_OVR = np.array([8.924546794696789354e-01, 6.609981731940616223e-01, 7.600269530243179694e-02])
 SIG_MODEL_PATH = "local/sig.onnx"
 BAK_OVR_MODEL_PATH = "local/bak_ovr.onnx"

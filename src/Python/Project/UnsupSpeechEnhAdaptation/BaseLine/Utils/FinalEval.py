@@ -12,7 +12,8 @@ import BaseLine.DatasetLoaders.Chime as Chime
 def get_args():
     """! Command line parser"""
     parser = argparse.ArgumentParser(description = "Final evaluation Argument Parser")
-    parser.add_argument("--model_checkpoint", type = str,
+    parser.add_argument(
+        "--model_checkpoint", type = str,
         help = """The absolute path of a pre-trained separation model that will be used for warm start for the teacher network.""",
         default = None,
     )

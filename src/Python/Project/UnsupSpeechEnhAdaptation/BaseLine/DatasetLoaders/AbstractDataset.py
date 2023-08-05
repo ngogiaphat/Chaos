@@ -70,8 +70,10 @@ class Dataset:
             all_checks_passed = all([f(value) for f in extra_lambda_checks])
             if not all_checks_passed:
                 raise ValueError(
-                    "Value(s): <{}> for key: <{}> " "does/do not fulfill the predefined checks: " "<{}>".format(value, key,
-                    [inspect.getsourcelines(c)[0][0].strip()
-                     for c in extra_lambda_checks
-                     if not c(value)]))
+                    "Value(s): <{}> for key: <{}> " "does/do not fulfill the predefined checks: " "<{}>".format(value, key, [
+                        inspect.getsourcelines(c)[0][0].strip()
+                        for c in extra_lambda_checks
+                        if not c(value)
+                    ])
+                )
         return value

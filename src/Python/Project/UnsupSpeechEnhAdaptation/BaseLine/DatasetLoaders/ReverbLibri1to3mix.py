@@ -1,7 +1,7 @@
 """!
-@brief Pytorch dataloader for Libri1to3chime dataset with reverb augmentation.
-@author Efthymios Tzinis {etzinis2@illinois.edu}
-@copyright University of illinois at Urbana Champaign
+    @brief Pytorch dataloader for Libri1to3chime dataset with reverb augmentation.
+    @author Efthymios Tzinis {etzinis2@illinois.edu}
+    @copyright University of illinois at Urbana Champaign
 """
 import torch
 import os
@@ -59,7 +59,8 @@ class Dataset(torch.Utils.data.Dataset, AbstractDataset.Dataset):
                 self.available_filenames_dic[cnt] = {
                     'sources_paths': [
                         os.path.join(self.dataset_dirpath, s, fname)
-                        for s in self.source_types],
+                        for s in self.source_types
+                    ],
                     'noise_path': os.path.join(self.dataset_dirpath, 'noise', fname),
                     'n_active_sources': this_n_sources
                 }
@@ -74,19 +75,10 @@ class Dataset(torch.Utils.data.Dataset, AbstractDataset.Dataset):
             raise IOError('Dataset path: {} not found!'.format(path))
     def wavread(self, path):
         waveform, _ = torchaudio.load(path)
-        # # Resample in case of a given sample rate
-        # if self.sample_rate < fs:
-        #     waveform = torchaudio.functional.resample(
-        #         waveform, fs, self.sample_rate, resampling_method="kaiser_window")
-        # elif self.sample_rate > fs:
-        #     raise ValueError("Cannot upsample.")
-        
         # Convert to single-channel
         if len(waveform.shape) > 1:
             waveform = waveform.sum(0)
         return waveform
-        # return waveform - waveform.mean()
-        # return (1. * waveform - waveform.mean()) / (waveform.std() + 1e-8)
     def __len__(self):
         return self.n_samples
     def sample_room_parameters(self):
@@ -157,7 +149,8 @@ def test_generator():
         timelength = timelength, augment = 'train' in split,
         zero_pad = True, min_or_max = min_or_max, split = split,
         normalize_audio = False, n_samples = -1,
-        n_speakers_priors = n_speakers_priors)
+        n_speakers_priors = n_speakers_priors
+    )
     generator = data_loader.get_generator(batch_size = batch_size, num_workers = batch_size)
     print(f"Obtained: {len(generator)} files with fixed n_sources: {fixed_n_sources}")
     before = time.time()
@@ -206,7 +199,8 @@ def test_generator():
         timelength = timelength, augment = 'train' in split,
         zero_pad = True, min_or_max = min_or_max, split = split,
         normalize_audio = False, n_samples = -1,
-        n_speakers_priors = n_speakers_priors)
+        n_speakers_priors = n_speakers_priors
+    )
     generator = data_loader.get_generator(batch_size = batch_size, num_workers = 1)
     print(f"Obtained: {len(generator)} files with fixed n_sources: {fixed_n_sources}")
     for sources, noise in generator:
@@ -248,7 +242,8 @@ def test_generator():
         timelength = timelength, augment='train' in split,
         zero_pad=True, min_or_max = min_or_max, split = split,
         normalize_audio = False, n_samples = -1,
-        n_speakers_priors = n_speakers_priors)
+        n_speakers_priors = n_speakers_priors
+    )
     generator = data_loader.get_generator(batch_size = batch_size, num_workers = 1)
     print(f"Obtained: {len(generator)} files with fixed n_sources: {fixed_n_sources}")
     for sources, noise in generator:

@@ -39,9 +39,15 @@ os.environ['CUDA_VISIBLE_DEVICES'] = ','.join(
     [cad for cad in hparams['cuda_available_devices']])
 train_loss_name, train_loss = "train_neg_sisdr", pairwise_neg_sisdr
 val_losses = {
-    "train_speaker": {"sisdr": pairwise_neg_sisdr},
-    "train_noise": {"sisdr": pairwise_neg_sisdr},
-    "train_total": {"sisdr": pairwise_neg_sisdr},
+    "train_speaker": {
+        "sisdr": pairwise_neg_sisdr
+    },
+    "train_noise": {
+        "sisdr": pairwise_neg_sisdr
+    },
+    "train_total": {
+        "sisdr": pairwise_neg_sisdr
+    },
 }
 for val_set in [x for x in generators if not x == 'train']:
     if generators[val_set] is None:
@@ -54,9 +60,11 @@ for val_set in [x for x in generators if not x == 'train']:
         }
     else:
         val_losses[val_set] = {"sisdr": pairwise_neg_sisdr, "sisdri": pairwise_neg_sisdr}
-model = ImprovedSudormrf.SuDORMRF(out_channels = hparams['out_channels'], in_channels = hparams['in_channels'], num_blocks = hparams['num_blocks'],
-    upsampling_depth = hparams['upsampling_depth'], enc_kernel_size = hparams['enc_kernel_size'], enc_num_basis = hparams['enc_num_basis'], 
-    num_sources = hparams['max_num_sources'])
+model = ImprovedSudormrf.SuDORMRF(
+    out_channels = hparams['out_channels'], in_channels = hparams['in_channels'], num_blocks = hparams['num_blocks'],
+    upsampling_depth = hparams['upsampling_depth'], enc_kernel_size = hparams['enc_kernel_size'], enc_num_basis = hparams['enc_num_basis'],
+    num_sources = hparams['max_num_sources']
+)
 numparams = 0
 for f in model.parameters():
     if f.requires_grad:
@@ -163,8 +171,10 @@ for i in range(hparams['n_epochs']):
                     res_dic[val_d_name]['sisdr']['acc'] += sisdr.tolist()
                     res_dic[val_d_name]['sisdri']['acc'] += mix_sisdr.tolist()
             if hparams["log_audio"]:
-                audio_logger.log_sp_enh_batch(teacher_est_active_speakers.detach(), teacher_est_noises.detach(), gt_speaker_mix.detach(), noise.detach(), input_mix.detach(), 
-                                              experiment, step = val_step, tag = val_d_name, max_batch_items = 4)
+                audio_logger.log_sp_enh_batch(
+                    teacher_est_active_speakers.detach(), teacher_est_noises.detach(), gt_speaker_mix.detach(), noise.detach(), input_mix.detach(),
+                    experiment, step = val_step, tag = val_d_name, max_batch_items = 4
+                )
     val_step += 1
     if hparams["save_models_every"] > 0 and not tr_step % hparams["save_models_every"] == 0:
         for d_name in res_dic:
