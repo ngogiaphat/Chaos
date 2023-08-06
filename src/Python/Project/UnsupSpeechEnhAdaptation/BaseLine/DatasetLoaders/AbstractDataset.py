@@ -1,8 +1,6 @@
 """
-Pytorch abstract dataset class for inheritance.
-
-This code has been shamelessly copied from under the proper licence:
-https://github.com/etzinis/fedenhance/blob/master/fedenhance/dataset_loader/abstract_dataset.py
+    Pytorch abstract dataset class for inheritance. This code has been shamelessly copied from under the proper licence:
+    https://github.com/etzinis/fedenhance/blob/master/fedenhance/dataset_loader/abstract_dataset.py
 """
 from abc import abstractmethod
 import inspect
@@ -34,7 +32,8 @@ class Dataset:
         if self.time_samples > 0:
             tensor_wav = torch.tensor(
                 numpy_waveform[rand_start:rand_start + self.time_samples],
-                dtype=torch.float32)
+                dtype=torch.float32
+            )
             return self.safe_pad(tensor_wav)
         else:
             return torch.tensor(numpy_waveform, dtype=torch.float32)
