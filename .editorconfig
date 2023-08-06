@@ -16,32 +16,77 @@ insert_final_newline = false
 trim_trailing_whitespace = true
 # Matches the exact files either package.json or .travis.yml
 [{
-  package.json, package-lock.json, .eslintrc.json, .prettierrc.json, .travis.yml, LICENSE, VERSION,
+    package.json, package-lock.json, .eslintrc.json, .prettierrc.json, .travis.yml, LICENSE, VERSION,
 }]
-# Matches multiple files with brace expansion notation
-# Set default charset
-[*.{js, py, ipynb}]
-charset = utf-8
+# Jupyter Notebook Files
+[*.{ipynb, nb}]
 indent_size = 4
 end_of_line = crlf
 indent_style = space
-insert_final_newline = false
-# Tab indentation (no size specified)
-[Makefile]
-indent_style = space
-# Indentation override for all JS under lib directory
-[lib/**.js]
-indent_size = 4
-end_of_line = crlf
-indent_style = space
-insert_final_newline = false
-indent_size = 4
-end_of_line = crlf
-indent_style = space
-insert_final_newline = false
 # JSON Files
 [*.{json, json5, webmanifest}]
 indent_size = 4
 end_of_line = crlf
 indent_style = space
+[*.js, *.ts, *.java]
+charset = utf-8
+indent_size = 4
+end_of_line = crlf
+indent_style = space
+[*.c, *.cpp, *.h, *.hpp, *.cs, *.pas, *.nim]
+indent_size = 4
+end_of_line = crlf
+indent_style = space
+# Visual Studio XML Project Files
+[*.{csproj, vbproj, vcxproj.filters, proj, projitems, shproj}]
+indent_size = 4
+end_of_line = crlf
+# Visual Studio Solution Files
+[*.sln]
+indent_size = 4
+end_of_line = crlf
+indent_style = space
 insert_final_newline = false
+trim_trailing_whitespace = true
+# XML Configuration Files
+[*.{xml, config, props, targets, nuspec, resx, ruleset, vsixmanifest, vsct}]
+indent_size = 4
+end_of_line = crlf
+indent_style = space
+insert_final_newline = false
+trim_trailing_whitespace = true
+# YML, YAML Files
+[*.{yml, yaml}]
+indent_size = 4
+end_of_line = crlf
+indent_style = space
+insert_final_newline = false
+trim_trailing_whitespace = true
+# Markdown Files
+[*.{md, mdx}]
+indent_size = 4
+end_of_line = crlf
+indent_style = space
+insert_final_newline = false
+trim_trailing_whitespace = true
+# Batch Files
+[*.{cmd, bat}]
+indent_size = 4
+end_of_line = crlf
+indent_style = space
+insert_final_newline = false
+trim_trailing_whitespace = true
+# Bash Files
+[*.sh]
+indent_size = 4
+end_of_line = crlf
+indent_style = space
+insert_final_newline = false
+trim_trailing_whitespace = true
+# Makefiles
+[Makefile]
+indent_size = 4
+end_of_line = crlf
+indent_style = space
+insert_final_newline = false
+trim_trailing_whitespace = true
