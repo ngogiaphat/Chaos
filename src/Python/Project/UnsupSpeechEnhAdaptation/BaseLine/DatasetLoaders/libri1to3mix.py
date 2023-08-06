@@ -1,8 +1,7 @@
 """!
-@brief Pytorch dataloader for Libri2mix dataset.
-
-@author Efthymios Tzinis {etzinis2@illinois.edu}
-@copyright University of illinois at Urbana Champaign
+    @brief Pytorch dataloader for Libri2mix dataset.
+    @author Efthymios Tzinis {etzinis2@illinois.edu}
+    @copyright University of illinois at Urbana Champaign
 """
 import torch
 import os
@@ -13,11 +12,8 @@ from __config__ import LIBRI3MIX_ROOT_PATH
 import torchaudio
 class Dataset(torch.Utils.data.Dataset, AbstractDataset.Dataset):
     """ Dataset class for Librimix  1 to 3 for one and multi-speaker
-    speech enhancement problems.
-    Example of kwargs:
-        root_dirpath='/mnt/data/wham', task='enh_single',
-        split='tr', sample_rate=8000, timelength=4.0,
-        normalize_audio=False, n_samples=0, zero_pad=False
+        speech enhancement problems.
+        Example of kwargs: root_dirpath='/mnt/data/wham', task='enh_single', split='tr', sample_rate=8000, timelength=4.0, normalize_audio=False, n_samples=0, zero_pad=False
     """
     def __init__(self, **kwargs):
         super(Dataset, self).__init__()
@@ -36,7 +32,8 @@ class Dataset(torch.Utils.data.Dataset, AbstractDataset.Dataset):
         self.dataset_dirpath = self.get_path()
         self.available_filenames = [
             os.path.basename(f) for f in
-            glob2.glob(os.path.join(self.dataset_dirpath, 's1') + '/*.wav')]
+            glob2.glob(os.path.join(self.dataset_dirpath, 's1') + '/*.wav')
+        ]
         self.source_types = ['s1', 's2', 's3', 'noise']
         #Check that all files are available.
         for fname in self.available_filenames:
@@ -61,7 +58,8 @@ class Dataset(torch.Utils.data.Dataset, AbstractDataset.Dataset):
                 self.available_filenames_dic[cnt] = {
                     'sources_paths': [
                         os.path.join(self.dataset_dirpath, s, fname)
-                        for s in self.source_types],
+                        for s in self.source_types
+                    ],
                     'noise_path': os.path.join(self.dataset_dirpath, 'noise', fname),
                     'n_active_sources': this_n_sources
                 }
@@ -76,19 +74,9 @@ class Dataset(torch.Utils.data.Dataset, AbstractDataset.Dataset):
             raise IOError('Dataset path: {} not found!'.format(path))
     def wavread(self, path):
         waveform, _ = torchaudio.load(path)
-        # # Resample in case of a given sample rate
-        # if self.sample_rate < fs:
-        #     waveform = torchaudio.functional.resample(
-        #         waveform, fs, self.sample_rate, resampling_method="kaiser_window")
-        # elif self.sample_rate > fs:
-        #     raise ValueError("Cannot upsample.")
-
-        # Convert to single-channel
         if len(waveform.shape) > 1:
             waveform = waveform.sum(0)
         return waveform
-        # return waveform - waveform.mean()
-        # return (1. * waveform - waveform.mean()) / (waveform.std() + 1e-8)
     def __len__(self):
         return self.n_samples
     def __getitem__(self, idx):
@@ -150,9 +138,9 @@ def test_generator():
         timelength = timelength, augment = 'train' in split,
         zero_pad = True, min_or_max = min_or_max, split = split,
         normalize_audio = False, n_samples = -1,
-        n_speakers_priors = n_speakers_priors)
-    generator = data_loader.get_generator(
-        batch_size=batch_size, num_workers=1)
+        n_speakers_priors = n_speakers_priors
+    )
+    generator = data_loader.get_generator(batch_size=batch_size, num_workers=1)
     print(f"Obtained: {len(generator)} files with fixed n_sources: {fixed_n_sources}")
     for sources, noise in generator:
         print(sources.shape)

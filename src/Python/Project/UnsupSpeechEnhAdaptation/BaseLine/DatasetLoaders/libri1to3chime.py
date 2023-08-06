@@ -1,9 +1,9 @@
 """!
-@brief Pytorch dataloader for Libri1to3chime dataset.
-The noise source comes from chime whereas the speaker mixture is drawn from
-libri3mix with the appropriate zero masking of the non-active speakers.
-@author Efthymios Tzinis {etzinis2@illinois.edu}
-@copyright University of illinois at Urbana Champaign
+    @brief Pytorch dataloader for Libri1to3chime dataset.
+    The noise source comes from chime whereas the speaker mixture is drawn from
+    libri3mix with the appropriate zero masking of the non-active speakers.
+    @author Efthymios Tzinis {etzinis2@illinois.edu}
+    @copyright University of illinois at Urbana Champaign
 """
 import torch
 import os
@@ -14,9 +14,7 @@ from __config__ import LIBRI3MIX_ROOT_PATH
 from __config__ import CHiME_ROOT_PATH
 import torchaudio
 class Dataset(torch.utils.data.Dataset, abstract_dataset.Dataset):
-    """ Dataset class for Librimix 1 to 3 for one and multi-speaker
-    speech enhancement problems mixed with noise from CHiME.
-    """
+    """ Dataset class for Librimix 1 to 3 for one and multi-speaker speech enhancement problems mixed with noise from CHiME."""
     def __init__(self, **kwargs):
         super(Dataset, self).__init__()
         self.kwargs = kwargs
@@ -36,10 +34,12 @@ class Dataset(torch.utils.data.Dataset, abstract_dataset.Dataset):
         self.noise_dataset_dirpath = self.get_noise_path(split = noise_split)
         self.available_speech_filenames = [
             os.path.basename(f) for f in
-            glob2.glob(os.path.join(self.speaker_mix_dataset_dirpath, 's1') + '/*.wav')]
+            glob2.glob(os.path.join(self.speaker_mix_dataset_dirpath, 's1') + '/*.wav')
+        ]
         self.available_noise_filenames = [
             os.path.join(os.path.split(os.path.split(f)[0])[1], os.path.basename(f))
-            for f in glob2.glob(self.noise_dataset_dirpath + '/0/*.wav')]
+            for f in glob2.glob(self.noise_dataset_dirpath + '/0/*.wav')
+        ]
         speaker_mix_samples = len(self.available_speech_filenames)
         noise_samples = len(self.available_noise_filenames)
         #Populate noise files to create more mixtures
@@ -76,7 +76,8 @@ class Dataset(torch.utils.data.Dataset, abstract_dataset.Dataset):
                 self.available_filenames_dic[cnt] = {
                     'sources_paths': [
                         os.path.join(self.speaker_mix_dataset_dirpath, s, fname)
-                        for s in self.source_types],
+                        for s in self.source_types
+                    ],
                     'noise_path': this_noise_path,
                     'n_active_sources': this_n_sources
                 }
@@ -110,7 +111,6 @@ class Dataset(torch.utils.data.Dataset, abstract_dataset.Dataset):
         if self.augment and noise_len > self.time_samples > 0:
             start_index = np.random.randint(0, noise_len - self.time_samples)
         noise_tensor = self.get_padded_tensor(noise_w, start_index=start_index)
-
         src_tensor_list = []
         for src_idx in range(3):
             if src_idx + 1 <= file_info['n_active_sources']:
@@ -177,7 +177,8 @@ def test_generator():
         timelength = timelength, augment='train' in split,
         zero_pad = True, min_or_max = min_or_max, split = split,
         normalize_audio = False, n_samples = -1,
-        n_speakers_priors = n_speakers_priors)
+        n_speakers_priors = n_speakers_priors
+    )
     generator = data_loader.get_generator(batch_size=batch_size, num_workers=1)
     print(f"Obtained: {len(generator)} files with fixed n_sources: {fixed_n_sources}")
     for sources, noise in generator:

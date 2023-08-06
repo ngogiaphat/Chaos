@@ -1,8 +1,8 @@
 """!
-@brief Pytorch dataloader for CHiME dataset.
-@author Mostafa Sadeghi
-@author Efthymios Tzinis {etzinis2@illinois.edu}
-@copyright University of illinois at Urbana Champaign
+    @brief Pytorch dataloader for CHiME dataset.
+    @author Mostafa Sadeghi
+    @author Efthymios Tzinis {etzinis2@illinois.edu}
+    @copyright University of illinois at Urbana Champaign
 """
 import torch
 import os
@@ -13,7 +13,7 @@ from __config__ import CHiME_ROOT_PATH
 import torchaudio
 class Dataset(torch.Utils.data.Dataset, AbstractDataset.Dataset):
     """ Dataset class for the CHiME dataset for one and multi-speaker
-    speech enhancement problems.
+        speech enhancement problems.
     """
     def __init__(self, **kwargs):
         super(Dataset, self).__init__()
@@ -31,26 +31,31 @@ class Dataset(torch.Utils.data.Dataset, AbstractDataset.Dataset):
         self.dataset_dirpath = self.get_path()
         if self.split == 'train' and not self.use_vad:
             self.available_filenames = [
-                os.path.join(os.path.split(os.path.split(f)[0])[1], os.path.basename(f))
-                for f in glob2.glob(self.dataset_dirpath + '/unlabeled_10s/*.wav')]
+                    os.path.join(os.path.split(os.path.split(f)[0])[1], os.path.basename(f))
+                    for f in glob2.glob(self.dataset_dirpath + '/unlabeled_10s/*.wav')
+                ]
         elif self.split == 'train' and self.use_vad:
             self.available_filenames = [
-                os.path.join(os.path.split(os.path.split(f)[0])[1], os.path.basename(f))
-                for f in glob2.glob(self.dataset_dirpath + '/unlabeled_vad_10s/*.wav')]
+                    os.path.join(os.path.split(os.path.split(f)[0])[1], os.path.basename(f))
+                    for f in glob2.glob(self.dataset_dirpath + '/unlabeled_vad_10s/*.wav')
+                ]
         elif self.get_only_active_speakers and self.fixed_n_sources < 0:
             self.available_filenames = []
             for i in range(1, 4):
-                self.available_filenames += \
-                    [os.path.join(os.path.split(os.path.split(f)[0])[1], os.path.basename(f))
-                     for f in glob2.glob(self.dataset_dirpath + '/' + str(i) + '/*.wav')]
+                self.available_filenames += [
+                    os.path.join(os.path.split(os.path.split(f)[0])[1], os.path.basename(f))
+                    for f in glob2.glob(self.dataset_dirpath + '/' + str(i) + '/*.wav')
+                ]
         elif self.fixed_n_sources < 0:
             self.available_filenames = [
-                os.path.join(os.path.split(os.path.split(f)[0])[1], os.path.basename(f))
-                for f in glob2.glob(self.dataset_dirpath + '/**/*.wav')]
-        else:    
+                    os.path.join(os.path.split(os.path.split(f)[0])[1], os.path.basename(f))
+                    for f in glob2.glob(self.dataset_dirpath + '/**/*.wav')
+                ]
+        else:
             self.available_filenames = [
-                os.path.join(os.path.split(os.path.split(f)[0])[1], os.path.basename(f))
-                for f in glob2.glob(self.dataset_dirpath + '/' + str(self.fixed_n_sources) + '/*.wav')]
+                    os.path.join(os.path.split(os.path.split(f)[0])[1], os.path.basename(f))
+                    for f in glob2.glob(self.dataset_dirpath + '/' + str(self.fixed_n_sources) + '/*.wav')
+                ]
         #Check that all files are available.
         for fname in self.available_filenames:
             this_path = os.path.join(self.dataset_dirpath, fname)
@@ -82,7 +87,6 @@ class Dataset(torch.Utils.data.Dataset, AbstractDataset.Dataset):
         return waveform - waveform.mean()
     def __len__(self):
         return self.n_samples
-
     def __getitem__(self, idx):
         mixture_path = self.available_filenames[idx]
         mixture_w = self.wavread(os.path.join(self.dataset_dirpath, mixture_path))
@@ -105,7 +109,8 @@ def test_generator():
         sample_rate = sample_rate, fixed_n_sources = fixed_n_sources,
         timelength = timelength, augment = 'train' in split, use_vad = use_vad,
         zero_pad = True, split=split, get_only_active_speakers = get_only_active_speakers,
-        normalize_audio = False, n_samples = -1)
+        normalize_audio = False, n_samples = -1
+    )
     generator = data_loader.get_generator(batch_size = batch_size, num_workers = 1)
     print(f"Obtained: {len(generator)} files with fixed n_sources: {fixed_n_sources}")
     for mixture in generator:
