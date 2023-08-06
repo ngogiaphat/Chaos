@@ -176,7 +176,8 @@ def test_generator():
         timelength = timelength, augment = 'train' in split,
         zero_pad = True, min_or_max = min_or_max, split = split,
         normalize_audio = False, n_samples=-1,
-        n_speakers_priors = n_speakers_priors)
+        n_speakers_priors = n_speakers_priors
+    )
     generator = data_loader.get_generator(batch_size=batch_size, num_workers = 1)
     print(f"Obtained: {len(generator)} files with fixed n_sources: {fixed_n_sources}")
     for sources, noise in generator:
@@ -221,7 +222,8 @@ def test_generator():
         timelength = timelength, augment = 'train' in split,
         zero_pad = True, min_or_max = min_or_max, split = split,
         normalize_audio = False, n_samples = -1,
-        n_speakers_priors = n_speakers_priors)
+        n_speakers_priors = n_speakers_priors
+    )
     generator = data_loader.get_generator(batch_size = batch_size, num_workers = 1)
     print(f"Obtained: {len(generator)} files with fixed n_sources: {fixed_n_sources}")
     for sources, noise in generator:
