@@ -78,7 +78,8 @@ class Dataset(torch.Utils.data.Dataset, AbstractDataset.Dataset):
         #Resample in case of a given sample rate
         if self.sample_rate < fs:
             waveform = torchaudio.functional.resample(
-                waveform, fs, self.sample_rate, resampling_method="kaiser_window")
+                waveform, fs, self.sample_rate, resampling_method="kaiser_window"
+            )
         elif self.sample_rate > fs:
             raise ValueError("Cannot upsample.")
         #Convert to single-channel
