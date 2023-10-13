@@ -15,23 +15,21 @@ indent_style = space
 insert_final_newline = false
 trim_trailing_whitespace = true
 # Matches the exact files either package.json or .travis.yml
-[{
-    package.json, package-lock.json, .eslintrc.json, .prettierrc.json, .travis.yml, LICENSE, VERSION,
-}]
+[*.{package.json, package-lock.json, .eslintrc.json, .prettierrc.json, .travis.yml, LICENSE, VERSION}]
 indent_size = 4
 end_of_line = crlf
 indent_style = space
 insert_final_newline = false
 trim_trailing_whitespace = true
 # Jupyter Notebook Files
-[*.{ipynb, nb, py}]
+[*.{ipynb, nb, py, pyx, pxi, pxd}]
 indent_size = 4
 end_of_line = crlf
 indent_style = space
 insert_final_newline = false
 trim_trailing_whitespace = true
 # JSON Files
-[*.{json, json5, webmanifest}]
+[*.{json, json5, jsonc, webmanifest}]
 indent_size = 4
 end_of_line = crlf
 indent_style = space
@@ -42,7 +40,7 @@ indent_size = 4
 end_of_line = crlf
 indent_style = space
 trim_trailing_whitespace = true
-[*.c, *.cpp, *.h, *.hpp, *.cs, *.pas, *.nim]
+[*.{.c, .cpp, .h, .hpp, .cs, .pas, .nim}]
 indent_size = 4
 end_of_line = crlf
 indent_style = space
