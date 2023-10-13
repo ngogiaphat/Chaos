@@ -4,7 +4,7 @@ pi
 #Calculate the approximate value of Pi using Leibniz's formula
 n <- 1000000
 approx_pi <- 0
-for (i in 0:n) {
+for(i in 0:n){
   approx_pi <- approx_pi + (-1)^i / (2*i+1)
 }
 approx_pi <- 4 * approx_pi
