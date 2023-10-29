@@ -1,5 +1,4 @@
-linmodEst <- function(x, y)
-{
+linmodEst <- function(x, y){
     ## compute QR-decomposition of x
     qx <- qr(x)
     ## compute (x’x)^(-1) x’y

@@ -1,5 +1,4 @@
-summary.linmod <- function(object, ...)
-{
+summary.linmod <- function(object, ...){
     se <- sqrt(diag(object$vcov))
     tval <- coef(object) / se
     TAB <- cbind(Estimate = coef(object),
@@ -12,8 +11,7 @@ summary.linmod <- function(object, ...)
     res
 }
 #The utility function printCoefmat() can be used to print the matrix with appropriate rounding and some decoration:
-print.summary.linmod <- function(x, ...)
-{
+print.summary.linmod <- function(x, ...){
     cat("Call:\n")
     print(x$call)
     cat("\n")

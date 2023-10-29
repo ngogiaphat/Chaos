@@ -1,18 +1,14 @@
 # Program make a simple calculator that can add, subtract, multiply and divide using functions
-add <- function(x, y) 
-{
+add <- function(x, y){
     return(x + y)
 }
-subtract <- function(x, y) 
-{
+subtract <- function(x, y){
     return(x - y)
 }
-multiply <- function(x, y) 
-{
+multiply <- function(x, y) {
     return(x * y)
 }
-divide <- function(x, y) 
-{
+divide <- function(x, y){
     return(x / y)
 }
 # take input from the user
