@@ -1,9 +1,27 @@
 graph = {
-    'A': {'B': 6, 'D': 1},
-    'B': {'A': 6, 'C': 5, 'D': 2},
-    'C': {'B': 5, 'E': 1},
-    'D': {'A': 1, 'B': 2, 'C': 5, 'E': 1},
-    'E': {'C': 1, 'D': 1}
+    'A': {
+        'B': 6,
+        'D': 1,
+    },
+    'B': {
+        'A': 6,
+        'C': 5,
+        'D': 2,
+    },
+    'C': {
+        'B': 5,
+        'E': 1,
+    },
+    'D': {
+        'A': 1,
+        'B': 2,
+        'C': 5,
+        'E': 1,
+    },
+    'E': {
+        'C': 1,
+        'D': 1,
+    }
 }
 def find(parent, i):
     if parent[i] == i:
@@ -22,7 +40,7 @@ def union(parent, rank, x, y):
 def kruskal(graph):
     result = []
     i = 0
-    e = 0 
+    e = 0
     parent = {}
     rank = {}
     for node in graph:
@@ -37,7 +55,7 @@ def kruskal(graph):
         y = find(parent, v)
         if x != y:
             e = e + 1
-            result.append([u, v, weight])
+            result.append([u, v, w])
             union(parent, rank, x, y)
     return result
 print(kruskal(graph))

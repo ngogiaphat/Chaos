@@ -10,10 +10,7 @@ node = [0 for i in range(1000)]
 # a node is present in graph or not
 isNode = [0 for i in range(1000)]
 # n -> it represent total number of nodes
-# len -> it is the maximum length of array
-# to hold parent of each node.
-# In worst case, the highest value of
-# parent a node can have is n-1.
+# len -> it is the maximum length of array to hold parent of each node. In worst case, the highest value of parent a node can have is n-1.
 # 2 ^ len <= n-1
 # len = O(log2n)
 def getLen(n):
@@ -26,7 +23,6 @@ def set_jump_pointer(len, n):
 	for j in range(1,len + 1):
 		for i in range(0, n):
 			jump[node[i]][j] = jump[jump[node[i]][j - 1]][j - 1]
-
 # c -> it represent child
 # p -> it represent parent
 # i -> it represent node number
@@ -57,7 +53,7 @@ def jumpPointer(x, L):
 	if (isNode[x] == 0):
 		print("Node is not present in graph ")
 		return
-	# In this loop we decrease the value of L by L/2 and increment j by 1 after each iteration, and check for set bit if we get set bit
+	# In this loop we decrease the value of L by L/2 and increment j by 1 after each iteration and check for set bit if we get set bit
 	# then we update x with jth parent of x as L becomes less than or equal to zero means we have jumped to Lth parent of node x
 	while (L > 0):
 		# To check if last bit is 1 or not

@@ -10,7 +10,6 @@ def BellmanFord(graph, V, src):
         if dist[u] != INF and dist[u] + weight < dist[v]:
             return "Đồ thị có chu trình âm"
     return dist
-
 def findMinSpanningTree(graph, V):
     src = 0
     dist = BellmanFord(graph, V, src)

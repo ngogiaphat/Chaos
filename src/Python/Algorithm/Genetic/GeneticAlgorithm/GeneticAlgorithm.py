@@ -2,8 +2,7 @@ import random
 """Define the function to be optimized"""
 def fitness_function(x):
     return -x**2 + 5
-
-"""Initial population initialization"""    
+"""Initial population initialization"""
 def generate_population(size, chromosome_length):
     population = []
     for i in range(size):
@@ -12,7 +11,6 @@ def generate_population(size, chromosome_length):
             chromosome.append(random.randint(0, 1))
         population.append(chromosome)
     return population
-
 """The value of each individual in the population"""
 def calculate_fitness(population):
     fitness_scores = []
@@ -20,7 +18,6 @@ def calculate_fitness(population):
         x = int ("".join(str(gene) for gene in chromosome), 2)
         fitness_scores.append(fitness_function(x))
     return fitness_scores
-
 """Select 2 parents for hybridization"""
 def select_parents(population, fitness_scores):
     total_fitness = sum(fitness_scores)
@@ -38,21 +35,18 @@ def select_parents(population, fitness_scores):
         if parent1 and parent2:
             break
     return parent1, parent2
-
 """Crossing between two parents to create offspring"""
 def crossover(parent1, parent2):
     crossover_point = random.randint(0, len(parent1) - 1)
     child1 = parent1[:crossover_point] + parent2[crossover_point:]
     child2 = parent2[:crossover_point] + parent1[crossover_point:]
     return child1, child2
-
 """Mutation an individual with a mutation rate of mutation_rate"""
 def mutate(chromosome, mutation_rate):
     for i in range(len(chromosome)):
         if random.uniform(0, 1) < mutation_rate:
             chromosome[i] = 1 - chromosome[i]
     return chromosome
-
 """Apply Genetic Algorithm to optimize the function"""
 def genetic_algorithm(population_size, chromosome_length, mutation_rate, generations):
     population = generate_population(population_size, chromosome_length)

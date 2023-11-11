@@ -46,16 +46,14 @@ class ConvNormAct(nn.Module):
         output = self.norm(output)
         return self.act(output)
 class ConvNorm(nn.Module):
-    '''
-        This class defines the convolution layer with normalization and PReLU activation
-    '''
+    """This class defines the convolution layer with normalization and PReLU activation"""
     def __init__(self, nIn, nOut, kSize, stride = 1, groups = 1):
-        '''
+        """
             :param nIn: number of input channels
             :param nOut: number of output channels
             :param kSize: kernel size
             :param stride: stride rate for down-sampling. Default is 1
-        '''
+        """
         super().__init__()
         padding = int((kSize - 1) / 2)
         self.conv = nn.Conv1d(nIn, nOut, kSize, stride=stride, padding = padding, bias = True, groups = groups)
@@ -64,13 +62,9 @@ class ConvNorm(nn.Module):
         output = self.conv(input)
         return self.norm(output)
 class NormAct(nn.Module):
-    '''
-        This class defines a normalization and PReLU activation
-    '''
+    """This class defines the convolution layer with normalization and PReLU activation"""
     def __init__(self, nOut):
-        '''
-            :param nOut: number of output channels
-        '''
+        """:param nOut: number of output channels"""
         super().__init__()
         #Self.norm = nn.GroupNorm(1, nOut, eps=1e-08)
         self.norm = GlobLN(nOut)
@@ -79,9 +73,7 @@ class NormAct(nn.Module):
         output = self.norm(input)
         return self.act(output)
 class DilatedConv(nn.Module):
-    '''
-        This class defines the dilated convolution.
-    '''
+    """This class defines the dilated convolution."""
     def __init__(self, nIn, nOut, kSize, stride=1, d=1, groups=1):
         '''
             :param nIn: number of input channels
@@ -95,9 +87,7 @@ class DilatedConv(nn.Module):
     def forward(self, input):
         return self.conv(input)
 class DilatedConvNorm(nn.Module):
-    '''
-        This class defines the dilated convolution with normalized output.
-    '''
+    """This class defines the dilated convolution with normalized output."""
     def __init__(self, nIn, nOut, kSize, stride=1, d=1, groups=1):
         '''
             :param nIn: number of input channels

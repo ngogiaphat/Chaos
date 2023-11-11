@@ -1,6 +1,7 @@
 import torch
 def apply(pr_batch, input_mixture, mix_weights_type="uniform"):
-    """Apply mixture consistency
+    """
+        Apply mixture consistency
         :param pr_batch: Torch Tensors of size: batch_size x self.n_sources x length_of_wavs
         :param input_mixture: Torch Tensors of size: batch_size x 1 x length_of_wavs
         :param mix_weights_type: type of wights applied
