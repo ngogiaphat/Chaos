@@ -9,83 +9,80 @@
 # This file is the top-most EditorConfig file
 root = true
 [*]
-tab_width = 4
 indent_size = 4
 end_of_line = crlf
 indent_style = space
 insert_final_newline = false
 trim_trailing_whitespace = true
-# Jupyter Notebook Files
-[*.{ipynb, nb, py, pyx, pxi, pxd}]
-tab_width = 4
+# Matches the exact package files
+[*.{package.json, package-lock.json, .eslintrc.json, .eslintignore, .prettierrc.json, .prettierignore, firebase.json, babel.config.json, edgeware.json, .travis.yml, LICENSE, VERSION}]
 indent_size = 4
-end_of_line = crlf
-indent_style = space
-insert_final_newline = false
-trim_trailing_whitespace = true
-# Matches the exact files either package.json or .travis.yml
-[*.{package.json, package-lock.json, .eslintrc.json, .prettierrc.json, .travis.yml, LICENSE, VERSION}]
-tab_width = 2
-indent_size = 2
 end_of_line = crlf
 indent_style = space
 insert_final_newline = false
 trim_trailing_whitespace = true
 # JSON Files
 [*.{json, json5, jsonc, webmanifest}]
-tab_width = 2
-indent_size = 2
+indent_size = 4
 end_of_line = crlf
 indent_style = space
 trim_trailing_whitespace = true
-[*.{js, cjs, mjs, ts, cts, mts, jsx, tsx, java, vue, svelte}]
-tab_width = 2
-indent_size = 2
+# JS files and typechecker files
+[*.{js, cjs, mjs, ts, cts, mts, jsx, tsx, vue, svelte, astro, gql, graphql}]
+charset = utf-8
+indent_size = 4
 end_of_line = crlf
 indent_style = space
 trim_trailing_whitespace = true
-[*.{c, cpp, h, hpp, cs, pas, nim}]
-tab_width = 2
-indent_size = 2
+# language for Data Science
+[*.{ipynb, nb, py, pyx, pxi, pxd, r, rmd}]
+indent_size = 4
+end_of_line = crlf
+indent_style = space
+trim_trailing_whitespace = true
+# styles files
+[*.{css, scss, sass, less, styl, stylus}]
+indent_size = 4
+end_of_line = crlf
+indent_style = space
+trim_trailing_whitespace = true
+# Object language
+[*.{v, c, cpp, h, hpp, m, cs, pas, nim, rs, go, java, kt, scala, swift, ruby, php}]
+indent_size = 4
 end_of_line = crlf
 indent_style = space
 insert_final_newline = false
 trim_trailing_whitespace = true
 # Visual Studio XML Project Files
 [*.{csproj, vbproj, vcxproj.filters, proj, projitems, shproj}]
-tab_width = 2
-indent_size = 2
+indent_size = 4
 end_of_line = crlf
 indent_style = space
 insert_final_newline = false
 trim_trailing_whitespace = true
 # Visual Studio Solution Files
 [*.sln]
-tab_width = 2
-indent_size = 2
+indent_size = 4
 end_of_line = crlf
 indent_style = space
 insert_final_newline = false
 trim_trailing_whitespace = true
 # XML Configuration Files
 [*.{xml, config, props, targets, nuspec, resx, ruleset, vsixmanifest, vsct}]
-tab_width = 2
-indent_size = 2
+indent_size = 4
 end_of_line = crlf
 indent_style = space
 insert_final_newline = false
 trim_trailing_whitespace = true
 # YML, YAML Files
 [*.{yml, yaml}]
-tab_width = 2
-indent_size = 2
+indent_size = 4
 end_of_line = crlf
 indent_style = space
 insert_final_newline = false
 trim_trailing_whitespace = true
 # Markdown Files
 [*.{md, mdx}]
-tab_width = 2
 indent_size = 2
 end_of_line = crlf
 indent_style = space
@@ -93,24 +90,21 @@ insert_final_newline = false
 trim_trailing_whitespace = true
 # Batch Files
 [*.{cmd, bat}]
-tab_width = 2
-indent_size = 2
+indent_size = 4
 end_of_line = crlf
 indent_style = space
 insert_final_newline = false
 trim_trailing_whitespace = true
 # Bash Files
 [*.sh]
-tab_width = 2
-indent_size = 2
+indent_size = 4
 end_of_line = crlf
 indent_style = space
 insert_final_newline = false
 trim_trailing_whitespace = true
 # Makefiles
 [Makefile]
-tab_width = 2
-indent_size = 2
+indent_size = 4
 end_of_line = crlf
 indent_style = space
 insert_final_newline = false
