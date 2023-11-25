@@ -15,7 +15,7 @@ indent_style = space
 insert_final_newline = false
 trim_trailing_whitespace = true
 # Matches the exact package files
-[*.{package.json, package-lock.json, .eslintrc.json, .eslintignore, .prettierrc.json, .prettierignore, firebase.json, babel.config.json, edgeware.json, .travis.yml, LICENSE, VERSION}]
+[*.{package.json, package-lock.json, yarn.locl, pnpm-lock.yaml, pnpm-workspace.yaml, .eslintrc, eslintrc.js, .eslintignore, .prettierrc, .prettierrc.js, .prettierignore, firebase.json, babel.config.json, edgeware.json, .travis.yml, LICENSE, VERSION}]
 indent_size = 4
 end_of_line = crlf
 indent_style = space
@@ -26,7 +26,6 @@ trim_trailing_whitespace = true
 indent_size = 4
 end_of_line = crlf
 indent_style = space
-insert_final_newline = false
 trim_trailing_whitespace = true
 # JS files and typechecker files
 [*.{js, cjs, mjs, ts, cts, mts, jsx, tsx, vue, svelte, astro, gql, graphql}]
@@ -34,21 +33,25 @@ charset = utf-8
 indent_size = 4
 end_of_line = crlf
 indent_style = space
-insert_final_newline = false
 trim_trailing_whitespace = true
-# language for Data Science
+# Language for Data Science
 [*.{ipynb, nb, py, pyx, pxi, pxd, r, rmd}]
 indent_size = 4
 end_of_line = crlf
 indent_style = space
-insert_final_newline = false
 trim_trailing_whitespace = true
-# styles files
-[*.{css, scss, sass, less, styl, stylus}]
+# Makeup languages
+[*.{xml, xsl, htm, html, xhtml, cshtml, vbhtml, haml, phtml, jinja, hbs, handlebars}]
 indent_size = 4
 end_of_line = crlf
 indent_style = space
 insert_final_newline = false
+trim_trailing_whitespace = true
+# Styles languages
+[*.{css, scss, sass, less, styl, stylus}]
+indent_size = 4
+end_of_line = crlf
+indent_style = space
 trim_trailing_whitespace = true
 # Object language
 [*.{v, c, cpp, h, hpp, m, cs, pas, nim, rs, go, java, kt, scala, swift, ruby, php, sol, tf, OCaml}]
