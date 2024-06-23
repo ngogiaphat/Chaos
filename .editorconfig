@@ -15,7 +15,7 @@ indent_style = space
 insert_final_newline = false
 trim_trailing_whitespace = true
 # Matches the exact package files
-[*.{package.json, package-lock.json, yarn.locl, pnpm-lock.yaml, pnpm-workspace.yaml, .eslintrc, eslintrc.js, .eslintignore, .prettierrc, .prettierrc.js, .prettierignore, firebase.json, babel.config.json, edgeware.json, .travis.yml, LICENSE, VERSION}]
+[*.{package.json, package-lock.json, yarn.lock, pnpm-lock.yaml, pnpm-workspace.yaml, .eslintrc, eslintrc.js, .eslintignore, .prettierrc, .prettierrc.js, .prettierignore, firebase.json, babel.config.json, edgeware.json, .travis.yml, LICENSE, VERSION}]
 indent_size = 4
 end_of_line = crlf
 indent_style = space
@@ -28,7 +28,7 @@ end_of_line = crlf
 indent_style = space
 trim_trailing_whitespace = true
 # JS files and typechecker files
-[*.{js, cjs, mjs, ts, cts, mts, jsx, tsx, vue, svelte, astro, gql, graphql}]
+[*.{js, cjs, mjs, ejs, ts, cts, mts, jsx, tsx, vue, svelte, astro, gql, graphql}]
 charset = utf-8
 indent_size = 4
 end_of_line = crlf
